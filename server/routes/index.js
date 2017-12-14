@@ -6,14 +6,10 @@ const
   bodyParser = require('body-parser'),
   app = express().use(bodyParser.json()); // creates express http server
 
-  app.listen(process.env.PORT || 80, () => console.log('webhook is listening'));
-
-
 /* GET home page. */
 app.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
-
 
 // Creates the endpoint for our webhook 
 app.post('/webhook', (req, res) => {  
