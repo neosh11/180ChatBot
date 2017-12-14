@@ -65,4 +65,4 @@ router.post('/webhook', (req, res) => {
     }
   });
 
-module.exports = app;
+module.exports = router;
