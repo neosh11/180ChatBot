@@ -10,8 +10,8 @@ var logger = require('morgan'); //NY
 var cookieParser = require('cookie-parser'); 
 var bodyParser = require('body-parser');
 
-var index = require('.server/routes/index');
-var users = require('.server/routes/users');
+var index = require('./server/routes/index');
+var users = require('./server/routes/users');
 
 var app = express();
 
