@@ -1,6 +1,8 @@
 'use strict';
 
 // Imports dependencies and set up http server
+var verifyC = "12345678910";
+
 const 
   express = require('express'),
   bodyParser = require('body-parser'),
@@ -42,7 +44,7 @@ app.post('/webhook', (req, res) => {
  app.get('/webhook', (req, res) => {
   
     // Your verify token. Should be a random string.
-    let VERIFY_TOKEN = "<YOUR_VERIFY_TOKEN>"
+    let VERIFY_TOKEN = verifyC;
       
     // Parse the query params
     let mode = req.query['hub.mode'];
