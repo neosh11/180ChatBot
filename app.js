@@ -2,7 +2,6 @@
   NY -Not yet used
 */
 
-const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 var express = require('express');
 var path = require('path'); //NY
