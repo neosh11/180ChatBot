@@ -97,6 +97,33 @@ router.post('/webhook', (req, res) => {
             "text": `out the damn garage`
           }
         }
+        else if(received_message.text == 'hello')
+        {
+          response = {
+            "attachment": {
+              "type": "template",
+              "payload": {
+                "template_type": "generic",
+                "elements": [{
+                  "title": "Are you happy with us?",
+                  "subtitle": "Tap a button to answer.",
+                  "buttons": [
+                    {
+                      "type": "postback",
+                      "title": "Yes!",
+                      "payload": "yes",
+                    },
+                    {
+                      "type": "postback",
+                      "title": "No!",
+                      "payload": "no",
+                    }
+                  ],
+                }]
+              }
+            }
+          }
+        }
         else{
           // Create the payload for a basic text message
           response = {
