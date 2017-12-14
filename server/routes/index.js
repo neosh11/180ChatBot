@@ -1,20 +1,17 @@
 'use strict';
 
+var express = require('express');
+var router = express.Router();
 // Imports dependencies and set up http server
 var verifyC = "12345678910";
 
-const 
-  express = require('express'),
-  bodyParser = require('body-parser'),
-  app = express().use(bodyParser.json()); // creates express http server
-
 /* GET home page. */
-app.get('/', function(req, res, next) {
+router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
 // Creates the endpoint for our webhook 
-app.post('/webhook', (req, res) => {  
+router.post('/webhook', (req, res) => {  
   
    let body = req.body;
 
@@ -41,7 +38,7 @@ app.post('/webhook', (req, res) => {
  });
 
  // Adds support for GET requests to our webhook
- app.get('/webhook', (req, res) => {
+ router.get('/webhook', (req, res) => {
   
     // Your verify token. Should be a random string.
     let VERIFY_TOKEN = verifyC;
