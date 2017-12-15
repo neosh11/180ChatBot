@@ -81,53 +81,61 @@ router.post('/webhook', (req, res) => {
 function handleMessage(sender_psid, received_message) {
 
   let response;
-
   // Check if the message contains text
-  if (received_message.text) {
 
-    if(received_message.text == 'I am a god')
-    {
-      response = {
-        "text": `Huury up with my damn massage`
-      }
+  if(received_message.quick_reply.payload)
+  {
+    response = {
+      "text": `${received_message.quick_reply.payload}`
     }
-    else if(received_message.text == 'get the porsche')
-    {
-      response = {
-        "text": `out the damn garage`
+  }
+  else{
+    if (received_message.text) {
+
+      if(received_message.text == 'I am a god')
+      {
+        response = {
+          "text": `Huury up with my damn massage`
+        }
       }
-    }
-    else if(received_message.text == 'hello')
-    {
-      response = {
-        "attachment": {
-          "type": "template",
-          "payload": {
-            "template_type": "generic",
-            "elements": [{
-              "title": "Are you happy with us?",
-              "subtitle": "Tap a button to answer.",
-              "buttons": [
-                {
-                  "type": "postback",
-                  "title": "Yes!",
-                  "payload": "yes",
-                },
-                {
-                  "type": "postback",
-                  "title": "No!",
-                  "payload": "no",
-                }
-              ],
-            }]
+      else if(received_message.text == 'get the porsche')
+      {
+        response = {
+          "text": `out the damn garage`
+        }
+      }
+      else if(received_message.text == 'hello')
+      {
+        response = {
+          "attachment": {
+            "type": "template",
+            "payload": {
+              "template_type": "generic",
+              "elements": [{
+                "title": "Are you happy with us?",
+                "subtitle": "Tap a button to answer.",
+                "buttons": [
+                  {
+                    "type": "postback",
+                    "title": "Yes!",
+                    "payload": "yes",
+                  },
+                  {
+                    "type": "postback",
+                    "title": "No!",
+                    "payload": "no",
+                  }
+                ],
+              }]
+            }
           }
         }
       }
-    }
-    else{
-      // Create the payload for a basic text message
-      response = {
-        "text": `${received_message.text}`
+      else{
+        // Create the payload for a basic text message
+        response = {
+          "text": `${received_message.text}`
+        }
       }
     }
   }
@@ -147,8 +155,18 @@ function handlePostback(sender_psid, received_postback) {
         "quick_replies":[
           {
             "content_type":"text",
-            "title":"LOLO",
-            "payload":"123"
+            "title":"Option 1",
+            "payload":"1 1"
+          },
+          {
+            "content_type":"text",
+            "title":"Option 2",
+            "payload":"1 2"
+          },
+          {
+            "content_type":"text",
+            "title":"Option 3",
+            "payload":"1 3"
           }
         ]
       }
