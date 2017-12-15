@@ -78,68 +78,78 @@ router.post('/webhook', (req, res) => {
     }
   });
 
-  function handleMessage(sender_psid, received_message) {
-    
-      let response;
-    
-      // Check if the message contains text
-      if (received_message.text) {
+function handleMessage(sender_psid, received_message) {
 
-        if(received_message.text == 'I am a god')
-        {
-          response = {
-            "text": `Huury up with my damn massage`
-          }
-        }
-        else if(received_message.text == 'get the porsche')
-        {
-          response = {
-            "text": `out the damn garage`
-          }
-        }
-        else if(received_message.text == 'hello')
-        {
-          response = {
-            "attachment": {
-              "type": "template",
-              "payload": {
-                "template_type": "generic",
-                "elements": [{
-                  "title": "Are you happy with us?",
-                  "subtitle": "Tap a button to answer.",
-                  "buttons": [
-                    {
-                      "type": "postback",
-                      "title": "Yes!",
-                      "payload": "yes",
-                    },
-                    {
-                      "type": "postback",
-                      "title": "No!",
-                      "payload": "no",
-                    }
-                  ],
-                }]
-              }
-            }
-          }
-        }
-        else{
-          // Create the payload for a basic text message
-          response = {
-            "text": `${received_message.text}`
+  let response;
+
+  // Check if the message contains text
+  if (received_message.text) {
+
+    if(received_message.text == 'I am a god')
+    {
+      response = {
+        "text": `Huury up with my damn massage`
+      }
+    }
+    else if(received_message.text == 'get the porsche')
+    {
+      response = {
+        "text": `out the damn garage`
+      }
+    }
+    else if(received_message.text == 'hello')
+    {
+      response = {
+        "attachment": {
+          "type": "template",
+          "payload": {
+            "template_type": "generic",
+            "elements": [{
+              "title": "Are you happy with us?",
+              "subtitle": "Tap a button to answer.",
+              "buttons": [
+                {
+                  "type": "postback",
+                  "title": "Yes!",
+                  "payload": "yes",
+                },
+                {
+                  "type": "postback",
+                  "title": "No!",
+                  "payload": "no",
+                }
+              ],
+            }]
           }
         }
       }
-
-
-      
-      // Sends the response message
-      callSendAPI(sender_psid, response);    
     }
-  
+    else{
+      // Create the payload for a basic text message
+      response = {
+        "text": `${received_message.text}`
+      }
+    }
+  }
+  // Sends the response message
+  callSendAPI(sender_psid, response);    
+}
+
   // Handles messaging_postbacks events
 function handlePostback(sender_psid, received_postback) {
+  let response;
+  
+    // Check if the message contains text
+    if (received_postback.payload)
+    {
+      response = {
+        "text": `${received_postback.payload}`
+      }
+    }
+
+    callSendAPI(sender_psid, response);
+
+
   
 }
  
@@ -155,6 +165,7 @@ function callSendAPI(sender_psid, response) {
 
     // Send the HTTP request to the Messenger Platform
     request({
+      "messaging_type" : "RESPONSE",
       "uri": "https://graph.facebook.com/v2.6/me/messages",
       "qs": { "access_token": process.env.PAGE_ACCESS_TOKEN },
       "method": "POST",
