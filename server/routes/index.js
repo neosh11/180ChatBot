@@ -150,9 +150,16 @@ function handlePostback(sender_psid, received_postback) {
             "title":"LOLO",
             "payload":"123"
           }
+        ],
+        "buttons":[
+          {
+            "type":"postback",
+            "title":"Bookmark Item",
+            "payload":"123"
+          }
         ]
       }
-    }
+    } 
 
     callQuickSendAPI(sender_psid, response);
 
