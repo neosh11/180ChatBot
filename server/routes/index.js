@@ -143,7 +143,14 @@ function handlePostback(sender_psid, received_postback) {
     if (received_postback.payload)
     {
       response = {
-        "text": `${received_postback.payload}`
+        "text": `${received_postback.payload}`,
+        "quick_replies":[
+          {
+            "content_type":"text",
+            "title":"LOLO",
+            "payload":"123"
+          }
+        ]
       }
     }
 
@@ -185,14 +192,7 @@ function callQuickSendAPI(sender_psid, response) {
     "recipient": {
       "id": sender_psid
     },
-    "message": response,
-    "quick_replies":[
-      {
-        "content_type":"text",
-        "title":"LOLO",
-        "payload":"123"
-      }
-    ]
+    "message": response
   }
 
     // Send the HTTP request to the Messenger Platform
