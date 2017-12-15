@@ -147,7 +147,7 @@ function handlePostback(sender_psid, received_postback) {
       }
     }
 
-    callSendAPI(sender_psid, response);
+    callQuickSendAPI(sender_psid, response);
 
 
   
@@ -178,6 +178,39 @@ function callSendAPI(sender_psid, response) {
       }
     }); 
 }
+
+function callQuickSendAPI(sender_psid, response) {
+  // Construct the message body
+  let request_body = {
+    "recipient": {
+      "id": sender_psid
+    },
+    "message": response,
+    "quick_replies":[
+      {
+        "content_type":"text",
+        "title":"LOLO",
+        "payload":"123"
+      }
+    ]
+  }
+
+    // Send the HTTP request to the Messenger Platform
+    request({
+      "messaging_type" : "RESPONSE",
+      "uri": "https://graph.facebook.com/v2.6/me/messages",
+      "qs": { "access_token": process.env.PAGE_ACCESS_TOKEN },
+      "method": "POST",
+      "json": request_body
+    }, (err, res, body) => {
+      if (!err) {
+        console.log('message sent!')
+      } else {
+        console.error("Unable to send message:" + err);
+      }
+    }); 
+}
+
 
 
 
