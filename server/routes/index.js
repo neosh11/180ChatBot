@@ -50,102 +50,52 @@ router.post('/webhook', (req, res) => {
  
  });
 
- // Adds support for GET requests to our webhook
- router.get('/webhook', (req, res) => {
-  
-    // Your verify token. Should be a random string.
-    let VERIFY_TOKEN = verifyC;
-      
-    // Parse the query params
-    let mode = req.query['hub.mode'];
-    let token = req.query['hub.verify_token'];
-    let challenge = req.query['hub.challenge'];
-      
-    // Checks if a token and mode is in the query string of the request
-    if (mode && token) {
+// Adds support for GET requests to our webhook
+router.get('/webhook', (req, res) => {
+
+  // Your verify token. Should be a random string.
+  let VERIFY_TOKEN = verifyC;
     
-      // Checks the mode and token sent is correct
-      if (mode === 'subscribe' && token === VERIFY_TOKEN) {
-        
-        // Responds with the challenge token from the request
-        console.log('WEBHOOK_VERIFIED');
-        res.status(200).send(challenge);
+  // Parse the query params
+  let mode = req.query['hub.mode'];
+  let token = req.query['hub.verify_token'];
+  let challenge = req.query['hub.challenge'];
+    
+  // Checks if a token and mode is in the query string of the request
+  if (mode && token) {
+  
+    // Checks the mode and token sent is correct
+    if (mode === 'subscribe' && token === VERIFY_TOKEN) {
       
-      } else {
-        // Responds with '403 Forbidden' if verify tokens do not match
-        res.sendStatus(403);      
-      }
+      // Responds with the challenge token from the request
+      console.log('WEBHOOK_VERIFIED');
+      res.status(200).send(challenge);
+    
+    } else {
+      // Responds with '403 Forbidden' if verify tokens do not match
+      res.sendStatus(403);      
     }
-  });
+  }
+});
+
 
 function handleMessage(sender_psid, received_message) {
-
-  let response;
-  // Check if the message contains text
-
-  console.log("INIT: "+ received_message.text);
-
-  if(received_message.quick_reply.payload)
-  {
-    console.log("ABC: "+ received_message.text);
-    response = {
-      "text": `${received_message.quick_reply.payload}`
-    }
+  
+    let response;
+  
+    // Check if the message contains text
+    if (received_message.text) {    
+  
+      // Create the payload for a basic text message
+      response = {
+        "text": `You sent the message: "${received_message.text}". Now send me an image!`
+      }
+    }  
+    
+    // Sends the response message
+    callSendAPI(sender_psid, response);    
   }
-  else{
-    console.log("REC: "+ received_message.text);
-    if (received_message.text) {
 
-      if(received_message.text == 'I am a god')
-      {
-        response = {
-          "text": `Huury up with my damn massage`
-        }
-      }
-      else if(received_message.text == 'get the porsche')
-      {
-        response = {
-          "text": `out the damn garage`
-        }
-      }
-      else if(received_message.text == 'hello')
-      {
-        response = {
-          "attachment": {
-            "type": "template",
-            "payload": {
-              "template_type": "generic",
-              "elements": [{
-                "title": "Are you happy with us?",
-                "subtitle": "Tap a button to answer.",
-                "buttons": [
-                  {
-                    "type": "postback",
-                    "title": "Yes!",
-                    "payload": "yes",
-                  },
-                  {
-                    "type": "postback",
-                    "title": "No!",
-                    "payload": "no",
-                  }
-                ],
-              }]
-            }
-          }
-        }
-      }
-      else{
-        // Create the payload for a basic text message
-        response = {
-          "text": `${received_message.text}`
-        }
-      }
-    }
-  }
-  // Sends the response message
-  callSendAPI(sender_psid, response);    
-}
 
   // Handles messaging_postbacks events
 function handlePostback(sender_psid, received_postback) {
@@ -177,9 +127,6 @@ function handlePostback(sender_psid, received_postback) {
     } 
 
     callQuickSendAPI(sender_psid, response);
-
-
-  
 }
  
 // Sends response messages via the Send API
@@ -189,7 +136,7 @@ function callSendAPI(sender_psid, response) {
     "recipient": {
       "id": sender_psid
     },
-    "message": response,
+    "message": response
   }
 
     // Send the HTTP request to the Messenger Platform
