@@ -83,13 +83,17 @@ function handleMessage(sender_psid, received_message) {
   let response;
   // Check if the message contains text
 
+  console.log("INIT: "+ received_message.text);
+
   if(received_message.quick_reply.payload)
   {
+    console.log("ABC: "+ received_message.text);
     response = {
       "text": `${received_message.quick_reply.payload}`
     }
   }
   else{
+    console.log("REC: "+ received_message.text);
     if (received_message.text) {
 
       if(received_message.text == 'I am a god')
@@ -185,12 +189,11 @@ function callSendAPI(sender_psid, response) {
     "recipient": {
       "id": sender_psid
     },
-    "message": response
+    "message": response,
   }
 
     // Send the HTTP request to the Messenger Platform
     request({
-      "messaging_type" : "RESPONSE",
       "uri": "https://graph.facebook.com/v2.6/me/messages",
       "qs": { "access_token": process.env.PAGE_ACCESS_TOKEN },
       "method": "POST",
@@ -215,7 +218,6 @@ function callQuickSendAPI(sender_psid, response) {
 
     // Send the HTTP request to the Messenger Platform
     request({
-      "messaging_type" : "RESPONSE",
       "uri": "https://graph.facebook.com/v2.6/me/messages",
       "qs": { "access_token": process.env.PAGE_ACCESS_TOKEN },
       "method": "POST",
