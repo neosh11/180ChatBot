@@ -91,7 +91,17 @@ function handleMessage(sender_psid, received_message) {
     {
       response = {
         "text": `Type stuff fam!`
-      }
+      };
+    }
+
+    else if (received_message.quick_reply.payload == "S")
+    {
+
+      //Stat survey
+
+      response = {
+        "text": `Starting survey!`
+      };
     }
     // Check if the message contains text
     else if (received_message.text) {
@@ -99,7 +109,7 @@ function handleMessage(sender_psid, received_message) {
       // Create the payload for a basic text message
       response = {
         "text": `You sent the message: "${received_message.text}". Now send me an image!`
-      }
+      };
     }  
     
     // Sends the response message

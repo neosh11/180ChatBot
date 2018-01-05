@@ -64,8 +64,10 @@ var pairSchema = new mongoose.Schema({
  */
 var userSchema = new mongoose.Schema({
     qa: [qaSchema],
-    fbID: String
+    fbID: String,
+    positionID: {type: mongoose.Schema.Types.ObjectId, ref: 'Message'}
 });
+
 var qaSchema = new mongoose.Schema({
     id: {type: mongoose.Schema.Types.ObjectId, ref: 'Message'},
     answer: {type: String}
