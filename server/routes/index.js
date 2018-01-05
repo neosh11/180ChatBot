@@ -149,8 +149,7 @@ function handlePostback(sender_psid, received_postback) {
 function callFeedback(sender_psid, received_postback)
 {
   response = {
-    "text": `Type me some feedback fam!`,
-    "payload":"F"
+    "text": `Type me some feedback fam!`
   }
 
   let request_body = {
