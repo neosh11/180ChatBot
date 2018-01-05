@@ -94,11 +94,37 @@ function handleMessage(sender_psid, received_message) {
         response = {
           "text": `Type stuff!`
         }
+        //TODO Update user position to signify feedback
+      }
+      else if (received_message.quick_reply.payload == "S")
+      {
+        //Start Survey
+        response = {
+          "text": `Starting survey!`
+        }
+        //go to next question 
+        //TODO update user position to signify start of survey
+      }
+
+      else{
+        //TODO Check user position and act accordingly 
+          //add to Q/A
+          //Update user position
+          //next question 
       }
     }
     // Check if the message contains text
     else if (received_message.text) {
   
+      //TODO Check user position and act accordingly
+
+      //If feedback do that (i.e. update feedback and send to get started screen)
+
+      //if answering a text based question 
+        //update user Q/A
+        //update user position
+        //next question response
+
       // Create the payload for a basic text message
       response = {
         "text": `You sent the message: "${received_message.text}". Now send me an image!`
@@ -117,6 +143,7 @@ function handlePostback(sender_psid, received_postback) {
     // Check if the message contains text
     if (received_postback.payload == "get started")
     {
+      //Add user info to DB
       response = {
         "text": `What would you like me to do?`,
         "quick_replies":[

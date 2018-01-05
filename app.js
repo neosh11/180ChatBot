@@ -11,6 +11,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./server/routes/index');
+var routesApi = require('./DB/routes/index');
 var users = require('./server/routes/users');
 
 var app = express();
@@ -30,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 
+app.use('/api', routesApi)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
