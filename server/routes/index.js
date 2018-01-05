@@ -112,7 +112,10 @@ function handleMessage(sender_psid, received_message) {
 
   // Handles messaging_postbacks events
 function handlePostback(sender_psid, received_postback) {
-  let response;
+  
+    let response = {
+      "text": `Yo, I'm a postback`
+    };
   
     // Check if the message contains text
     if (received_postback.payload == "get started")
