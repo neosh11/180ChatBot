@@ -148,8 +148,10 @@ function handlePostback(sender_psid, received_postback) {
 
 function callFeedback(sender_psid, received_postback)
 {
+
+  console.log("ABCDEFG");
   response = {
-    "text": `Type me some feedback fam!`
+    "text": `You sent the message: "${received_message.text}". Now send me an image!`
   }
 
   let request_body = {
