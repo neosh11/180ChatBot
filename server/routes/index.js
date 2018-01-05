@@ -146,12 +146,12 @@ function handlePostback(sender_psid, received_postback) {
 }
  
 
-function callFeedback(sender_psid, received_postback)
+function callFeedback(sender_psid)
 {
 
   console.log("ABCDEFG");
   response = {
-    "text": `You sent the message: "${received_message.text}". Now send me an image!`
+    "text": `Type in your feedback fam!`
   }
 
   let request_body = {
