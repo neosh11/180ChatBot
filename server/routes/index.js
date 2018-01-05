@@ -150,15 +150,13 @@ function callFeedback(sender_psid)
 {
 
   console.log("ABCDEFG");
-  response = {
-    "text": `Type in your feedback fam!`
-  }
-
   let request_body = {
     "recipient": {
       "id": sender_psid
     },
-    "message": response
+    "message": {
+      "text" : `Type in your feedback fam!`
+    }
   }
 
   // Send the HTTP request to the Messenger Platform
