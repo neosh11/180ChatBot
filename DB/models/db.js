@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var gracefulShutdown;
 
-var dbURI = 'localhost/nefe';
+var dbURI = 'localhost/chatbot';
 if (process.env.NODE_ENV === 'production') {
     dbURI = process.env.MONGOLAB_URI;
 }
@@ -40,8 +40,14 @@ process.on('SIGINT', function() {
     });
 });
 
+
+
+//Messages
+/**
+ * Stores the messages/options/next node
+ */
 var messageSchema = new mongoose.Schema({
-    text: {type: String},
+    prompt: {type: String},
     options: [pairSchema],
     input: Boolean,
     next: mongoose.Schema.Types.ObjectId
@@ -49,5 +55,27 @@ var messageSchema = new mongoose.Schema({
 
 var pairSchema = new mongoose.Schema({
     messageID: {type: mongoose.Schema.Types.ObjectId, ref: 'Message', required: true},
-    name: String
+    label: String
 });
+
+//User Information
+/**
+ * Stores user responses
+ */
+var userSchema = new mongoose.Schema({
+    qa: [qaSchema],
+    fbID: String
+});
+var qaSchema = new mongoose.Schema({
+    id: {type: mongoose.Schema.Types.ObjectId, ref: 'Message'},
+    answer: {type: String}
+});
+
+//Feedback Information
+/**
+ * Stores user feedback
+ */
+var feedbackSchema = new mongoose.Schema({
+    feedback: {type: String, required: true},
+    fbID: String 
+})

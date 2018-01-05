@@ -3,6 +3,8 @@
 var express = require('express');
 var request = require('request');
 
+// var geoctrl = require('../controllers/geo');
+
 var router = express.Router();
 
 // Imports dependencies and set up http server
@@ -12,6 +14,8 @@ var verifyC = "12345678910";
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
+
+// router.get('/geo', geoctrl.call);
 
 // Creates the endpoint for our webhook 
 router.post('/webhook', (req, res) => {  
@@ -102,25 +106,20 @@ function handlePostback(sender_psid, received_postback) {
   let response;
   
     // Check if the message contains text
-    if (received_postback.payload)
+    if (received_postback.payload == "get started")
     {
       response = {
-        "text": `${received_postback.payload}`,
+        "text": `What would you like me to do?`,
         "quick_replies":[
           {
             "content_type":"text",
-            "title":"Option 1",
-            "payload":"1 1"
+            "title":"Feedback",
+            "payload":"F"
           },
           {
             "content_type":"text",
-            "title":"Option 2",
-            "payload":"1 2"
-          },
-          {
-            "content_type":"text",
-            "title":"Option 3",
-            "payload":"1 3"
+            "title":"Survey",
+            "payload":"S"
           }
         ]
       }
