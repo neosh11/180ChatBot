@@ -92,18 +92,11 @@ function handleMessage(sender_psid, received_message) {
 
   if(received_message.quick_reply.payload)
   {
-    switch(received_message.quick_reply.payload)
+    if(received_message.quick_reply.payload == "F")
     {
-      case "F": 
       callFeedback(sender_psid)
-      break;
-
-      case "S":
-
-      break;
-
-      default: break;
     }
+    
   }
 
   else if (received_message.text) {    
