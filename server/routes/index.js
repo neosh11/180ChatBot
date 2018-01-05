@@ -88,16 +88,7 @@ function handleMessage(sender_psid, received_message) {
     let response;
   
     // Check if the message contains text
-
-
-    if(received_message.quick_reply.payload == "F")
-    {
-      response = {
-        "text": `Type some feedback :)`
-      }
-    }
-
-    else if (received_message.text) {    
+    if (received_message.text) {    
   
       // Create the payload for a basic text message
       response = {
@@ -112,10 +103,7 @@ function handleMessage(sender_psid, received_message) {
 
   // Handles messaging_postbacks events
 function handlePostback(sender_psid, received_postback) {
-  
-    let response = {
-      "text": `Yo, I'm a postback`
-    };
+  let response;
   
     // Check if the message contains text
     if (received_postback.payload == "get started")
