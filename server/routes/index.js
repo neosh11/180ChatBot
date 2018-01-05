@@ -87,7 +87,7 @@ function handleMessage(sender_psid, received_message) {
   
     let response;
   
-    if(received_message.quick_reply.payload)
+    if(received_message.quick_reply)
     {
       if (received_message.quick_reply.payload == "F")
       {
