@@ -90,25 +90,14 @@ function handleMessage(sender_psid, received_message) {
     // Check if the message contains text
 
 
-    if(received_message.quick_reply.payload)
+    if(received_message.quick_reply.payload == "F")
     {
-      switch(received_message.quick_reply.payload)
-      {
-        case "F":
-
-        response = {
-          "text": `Type me some feedback fam!`
-        }
-        break;
-        case "S": 
-
-        break;
-
-        default: break;
+      response = {
+        "text": `Type some feedback :)`
       }
     }
 
-    if (received_message.text) {    
+    else if (received_message.text) {    
   
       // Create the payload for a basic text message
       response = {
