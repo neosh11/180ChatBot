@@ -87,8 +87,14 @@ function handleMessage(sender_psid, received_message) {
   
     let response;
   
+    if (received_message.quick_reply.payload == "F")
+    {
+      response = {
+        "text": `Type stuff fam!`
+      }
+    }
     // Check if the message contains text
-    if (received_message.text) {    
+    else if (received_message.text) {
   
       // Create the payload for a basic text message
       response = {
