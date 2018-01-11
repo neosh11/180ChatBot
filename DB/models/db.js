@@ -31,16 +31,20 @@ process.once('SIGUSR2', function () {
     gracefulShutdown('nodemon restart', function () {
         process.kill(process.pid, 'SIGUSR2');
     });
-});
+});// signal 2 defined by user
 
 // For app termination
 process.on('SIGINT', function() {
     gracefulShutdown('app termination', function () {
         process.exit(0);
     });
+});//SIGINT means termination
+
+
+var pairSchema = new mongoose.Schema({
+    messageID: {type: mongoose.Schema.Types.ObjectId, ref: 'Message', required: true},
+    label: String
 });
-
-
 
 //Messages
 /**
@@ -53,9 +57,10 @@ var messageSchema = new mongoose.Schema({
     next: mongoose.Schema.Types.ObjectId
 });
 
-var pairSchema = new mongoose.Schema({
-    messageID: {type: mongoose.Schema.Types.ObjectId, ref: 'Message', required: true},
-    label: String
+
+var qaSchema = new mongoose.Schema({
+    id: {type: mongoose.Schema.Types.ObjectId, ref: 'Message'},
+    answer: {type: String}
 });
 
 //User Information
@@ -68,16 +73,21 @@ var userSchema = new mongoose.Schema({
     positionID: {type: mongoose.Schema.Types.ObjectId, ref: 'Message'}
 });
 
-var qaSchema = new mongoose.Schema({
-    id: {type: mongoose.Schema.Types.ObjectId, ref: 'Message'},
-    answer: {type: String}
-});
+
 
 //Feedback Information
 /**
  * Stores user feedback
  */
 var feedbackSchema = new mongoose.Schema({
-    feedback: {type: String, required: true},
+    feedback: {type: String, required: true},//check whether the feedback is filled or not
     fbID: String 
 })
+
+module.exports={
+    messageSchema:messageSchema,
+    userSchema:userSchema,
+    qaSchema:qaSchema,
+    feedbackSchema:feedbackSchema,
+    pairSchema:pairSchema
+}

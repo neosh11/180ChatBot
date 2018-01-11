@@ -15,6 +15,10 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+
+router.get('/abc', function(req,res){
+  console.log(req);
+})
 // router.get('/geo', geoctrl.call);
 
 // Creates the endpoint for our webhook 
@@ -213,7 +217,7 @@ function callQuickSendAPI(sender_psid, response) {
     }); 
 }
 
-
+/* What's the difference between quicksendAPI and sendAPI */
 
 
 module.exports = router;
