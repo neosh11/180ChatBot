@@ -9,9 +9,9 @@ router.get('/users/position/:userid', ctrlUsers.getPosition);
 router.put('/users/position/:userid/:newposition', ctrlUsers.updatePosition);
 router.post('/users/qa/:userid', ctrlUsers.updateUserQA);
 
-router.get('/Question/:questionid', ctrlQuestions.getQuestion);
-router.post('/Question/:questionid', ctrlQuestions.addQuestion);
-router.put('/Question/:questionid', ctrlQuestions.updateQuestion);
+router.get('/questions/:questionid', ctrlQuestions.getQuestion);
+router.post('/questions', ctrlQuestions.addQuestion);
+router.put('/questions/:questionid', ctrlQuestions.updateQuestion);
 
 
 module.exports = router;

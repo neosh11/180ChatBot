@@ -3,7 +3,7 @@
 var express = require('express');
 var request = require('request');
 
-// var geoctrl = require('../controllers/geo');
+var ctrlTest = require('../controllers/DBtest');
 
 var router = express.Router();
 
@@ -16,9 +16,7 @@ router.get('/', function(req, res, next) {
 });
 
 
-router.get('/abc', function(req,res){
-  console.log(req);
-})
+router.get('/abc', ctrlTest.test);
 // router.get('/geo', geoctrl.call);
 
 // Creates the endpoint for our webhook 

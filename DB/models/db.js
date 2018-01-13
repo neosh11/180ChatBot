@@ -51,7 +51,7 @@ var pairSchema = new mongoose.Schema({
  * Stores the messages/options/next node
  */
 var messageSchema = new mongoose.Schema({
-    prompt: {type: String},
+    type: {type: String},
     options: [pairSchema],
     input: Boolean,
     next: mongoose.Schema.Types.ObjectId
