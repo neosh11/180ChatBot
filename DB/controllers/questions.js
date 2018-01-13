@@ -13,7 +13,7 @@ var sendJSONResponse = function (res, status, content) {
 //Get request
 module.exports.getQuestion = function (req, res) {
     Message
-        .findone({ _id: req.params.questionid })
+        .findOne({ id: req.params.questionid })
         .exec(function (err, question) {
             if (err || !question) {
                 sendJSONResponse(res, 404, 'Question not found!');
@@ -58,9 +58,12 @@ module.exports.addQuestion = function (req, res) {
 }
 
 //Put request
+//body.type
+//body.input
+//body.next
 module.exports.updateQuestion = function (req, res) {
     Message
-        .findone({ _id: req.params.questionid })
+        .findOne({ id: req.params.questionid })
         .exec(function (err, message) {
             if (err || !message) {
                 sendJSONResponse(res, 404, 'Question not found!');
@@ -69,17 +72,17 @@ module.exports.updateQuestion = function (req, res) {
             else {
 
                 if(req.body.type){
-                    message.prompt.push(req.body.prompt);
+                    message.prompt = req.body.prompt;
                 }
                 
                 if(req.body.input)
                 {
-                    message.input.push(req.body.input);
+                    message.input = req.body.input;
                 }
 
                 if(req.body.next)
                 {
-                    message.next.push(req.body.next);
+                    message.next = req.body.next;
                 }
 
                 message.save(function (err, saved) {
@@ -96,3 +99,44 @@ module.exports.updateQuestion = function (req, res) {
 
         })
 }
+
+//Put request
+//body.optionName
+//body.next
+module.exports.addOption = function (req, res) {
+    Message
+        .findOne({ id: req.params.questionid })
+        .exec(function (err, message) {
+            if (err || !message) {
+                sendJSONResponse(res, 404, 'Question not found!');
+                return;
+            }
+            else {
+
+
+                if(req.body.optionName){
+
+                    var pair = new Pair();
+                    pair.messageID = req.body.next;
+                    pair.label = req.body.optionName;
+                    message.options.push(pair);
+
+                    message.save(function (err, saved) {
+                        if (err) {
+                            sendJSONResponse(res, 400, err);
+                        } else {
+                            sendJSONResponse(res, 200, message);
+                        }
+                    });
+                    return;
+                }
+
+                else{
+                    sendJSONResponse(res, 400, "AA");
+                }
+            }
+
+
+        })
+}
+

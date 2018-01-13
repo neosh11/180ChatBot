@@ -2,7 +2,7 @@ var request = require('request');
 var package = require('../../package.json');
 
 var apiOptions = {
-    server: "https://chatbot180.herokuapp.com/"
+    server: "http://localhost"
 };
 
 if (process.env.NODE_ENV === 'production') {
@@ -15,67 +15,71 @@ module.exports.test = function (req, res) {
 
     path = '/api/users';
 
-    //ADD
-    requestOptions = {
-        url: apiOptions.server + '/api/users',
-        method: "POST",
-        json: {
-            "fbID": "abcdefgfewfe"
-        }
-    };
+    // //ADD
+    // requestOptions = {
+    //     url: apiOptions.server + '/api/users',
+    //     method: "POST",
+    //     json: {
+    //         "fbID": "fasdfhriughivfu"
+    //     }
+    // };
 
-    request(
-        requestOptions, function (err, response, body) {
+    // request(
+    //     requestOptions, function (err, response, body) {
 
-            if (err) {
-                console.log("FAIL AT ADD")
-            }
-            else {
-            }
-        }
-    );
+    //         if (err) {
+    //             console.log("FAIL AT ADD")
+    //             console.log(err);
+    //         }
+    //         else {
+    //             console.log("SUCCESS AT USER ADD");
+    //         }
+    //     }
+    // );
     
-    //Get position
-    requestOptions = {
-        url: apiOptions.server + '/api/users/position/abcdefgfewfe',
-        method: "GET",
-    };
+    // //Get position
+    // requestOptions = {
+    //     url: apiOptions.server + '/api/users/position/fasdfhriughivfu',
+    //     method: "GET",
+    // };
 
-    request(
-        requestOptions, function (err, response, body) {
+    // request(
+    //     requestOptions, function (err, response, body) {
 
-            if (err) {
-                console.log("FAIL AT GET USER POSITION")
-            }
-            else {
-                console.log("GET POS")
-                console.log(response);
-            }
-        }
-    );
+    //         if (err) {
+    //             console.log("FAIL AT GET USER POSITION")
+    //             console.log(err);
+    //         }
+    //         else {
+    //             console.log("GET POS")
+    //             console.log(body);
+    //         }
+    //     }
+    // );
 
-    //Update Position
-    requestOptions = {
-        url: apiOptions.server + '/api/users/position/abcdefgfewfe/3',
-        method: "PUT",
-    };
+    // //Update Position
+    // requestOptions = {
+    //     url: apiOptions.server + '/api/users/position/fasdfhriughivfu/3',
+    //     method: "PUT",
+    // };
 
-    request(
-        requestOptions, function (err, response, body) {
+    // request(
+    //     requestOptions, function (err, response, body) {
 
-            if (err) {
-                console.log("FAIL AT UPDATE USER POSITION")
-            }
-            else {
-                console.log("UPDATE POS");
-                console.log(response);
-            }
-        }
-    );
+    //         if (err) {
+    //             console.log("FAIL AT UPDATE USER POSITION")
+    //             console.log(err);
+    //         }
+    //         else {
+    //             console.log("UPDATE POS");
+    //             console.log(body);
+    //         }
+    //     }
+    // );
 
     // //ADD QA TO USER
     // requestOptions = {
-    //     url: apiOptions.server + '/api/users/qa/abcdefgfewfe',
+    //     url: apiOptions.server + '/api/users/qa/fasdfhriughivfu',
     //     method: "POST",
     //     json: {
     //         "answer": "LOLOL",
@@ -91,19 +95,64 @@ module.exports.test = function (req, res) {
     //         }
     //         else {
     //             console.log("UPDATE POS");
-    //             console.log(response);
+    //             console.log(body);
     //         }
     //     }
     // );
 
-    //ADD MESSAGE
+    // //ADD MESSAGE
+    // requestOptions = {
+    //     url: apiOptions.server + '/api/questions',
+    //     method: "POST",
+    //     json: {     
+    //         "type": "prompt",
+    //         "input": false,
+    //         "next": 123
+    //     }
+    // };
+
+    // request(
+    //     requestOptions, function (err, response, body) {
+
+    //         if (err) {
+    //             console.log("FAIL AT ADD MESSAGE")
+    //             console.log(err);
+    //         }
+    //         else {
+    //             console.log("ADD message");
+    //             console.log(body);
+    //         }
+    //     }
+    // );
+
+    //GET MESSAGE
     requestOptions = {
-        url: apiOptions.server + '/api/questions',
-        method: "POST",
+        url: apiOptions.server + '/api/questions/1',
+        method: "GET",
+    };
+
+    request(
+        requestOptions, function (err, response, body) {
+
+            if (err) {
+                console.log("FAIL AT GET MESSAGE")
+                console.log(err);
+            }
+            else {
+                console.log("GET message");
+                console.log(body);
+            }
+        }
+    );
+
+    //UPDATE MESSAGE
+    requestOptions = {
+        url: apiOptions.server + '/api/questions/1',
+        method: "PUT",
         json: {
-            "type": "prompt",
+            "type": "question",
             "input": false,
-            "next": 123
+            "next": 124
         }
     };
 
@@ -111,14 +160,42 @@ module.exports.test = function (req, res) {
         requestOptions, function (err, response, body) {
 
             if (err) {
-                console.log("FAIL AT ADD MESSAGE")
+                console.log("FAIL AT UPDATE MESSAGE")
+                console.log(err);
             }
             else {
-                console.log("ADD message");
-                console.log(response);
+                console.log("UPDATE message");
+                console.log(body);
             }
         }
     );
 
-    res.render('index')
+
+
+     //ADD MESSAGE OPTION
+     requestOptions = {
+        url: apiOptions.server + '/api/questions/addoption/1',
+        method: "PUT",
+        json: {
+            "optionName": "hihi",
+            "next": 213
+        }
+    };
+
+    request(
+        requestOptions, function (err, response, body) {
+
+            if (err) {
+                console.log("FAIL AT UPDATE MESSAGE options")
+                console.log(err);
+            }
+            else {
+                console.log("UPDATE message options");
+                console.log(body);
+            }
+        }
+    );
+
+
+
 }

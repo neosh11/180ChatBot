@@ -1,13 +1,19 @@
 var mongoose = require('mongoose');
 
+var autoIncrement = require('mongoose-auto-increment');
+
+
 var gracefulShutdown;
 
-var dbURI = 'localhost/chatbot';
+// var dbURI = 'localhost/chatbot';
+var dbURI = process.env.MONGOLAB_URI;
 if (process.env.NODE_ENV === 'production') {
     dbURI = process.env.MONGOLAB_URI;
 }
 
-mongoose.connect(dbURI);
+// mongoose.connect(dbURI);
+var connection = mongoose.connect(dbURI);
+autoIncrement.initialize(connection);
 
 mongoose.connection.on('connected', function () {
     console.log('Mongoose connected to ' + dbURI);
@@ -42,7 +48,7 @@ process.on('SIGINT', function() {
 
 
 var pairSchema = new mongoose.Schema({
-    messageID: {type: mongoose.Schema.Types.ObjectId, ref: 'Message', required: true},
+    messageID: Number,
     label: String
 });
 
@@ -51,15 +57,22 @@ var pairSchema = new mongoose.Schema({
  * Stores the messages/options/next node
  */
 var messageSchema = new mongoose.Schema({
+    id : Number,
     type: {type: String},
     options: [pairSchema],
     input: Boolean,
-    next: mongoose.Schema.Types.ObjectId
+    next: Number
 });
+messageSchema.plugin(autoIncrement.plugin, {
+    model: 'Message',
+    field: 'id',
+    startAt: 0,
+    incrementBy: 1});
+
 
 
 var qaSchema = new mongoose.Schema({
-    id: {type: mongoose.Schema.Types.ObjectId, ref: 'Message'},
+    id: Number,
     answer: {type: String}
 });
 
@@ -70,7 +83,7 @@ var qaSchema = new mongoose.Schema({
 var userSchema = new mongoose.Schema({
     qa: [qaSchema],
     fbID: String,
-    positionID: {type: mongoose.Schema.Types.ObjectId, ref: 'Message'}
+    positionID: Number
 });
 
 
@@ -83,6 +96,12 @@ var feedbackSchema = new mongoose.Schema({
     feedback: {type: String, required: true},//check whether the feedback is filled or not
     fbID: String 
 })
+
+var userSchema = mongoose.model('User', userSchema);
+var messageSchema = mongoose.model('Message', messageSchema);
+var qaSchema = mongoose.model('Qa', qaSchema);
+var feedbackSchema = mongoose.model('Feedback', feedbackSchema);
+var pairSchema = mongoose.model('Pair', pairSchema);
 
 module.exports={
     messageSchema:messageSchema,

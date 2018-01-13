@@ -8,19 +8,29 @@ var sendJSONResponse = function(res,status,content){
     res.json(content);
 }
 
+//ALL USER FUNCTIONS WORKING YAYAYAYAY!!
 //body.fbID
 module.exports.addUser = function(req,res){
     let userID = req.body.fbID;
 
+    console.log("HEHEHE");
+
     var user = new User();
     user.fbID = userID;
     user.qa =[];
+    user.positionID = 0;
 
     user.save(function(err){
-        if(err) sendJSONResponse(res,404,err);
+        if(err)
+        {
+            sendJSONResponse(res,404,err);
+            console.log(err);
+            console.log("SOMETHING IS WROnG")
+        }
         else console.log('Saved successfully ${userID}');
     })
 
+    console.log("HELLO!!");
 
 }
 
@@ -51,7 +61,7 @@ module.exports.updatePosition=function(req,res){
         else 
         {
 
-            user.positionID.push(req.params.newposition);
+            user.positionID = req.params.newposition;
 
             user.save(function(err, saved){
                 if(err)

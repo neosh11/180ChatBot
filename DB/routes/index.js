@@ -13,5 +13,8 @@ router.get('/questions/:questionid', ctrlQuestions.getQuestion);
 router.post('/questions', ctrlQuestions.addQuestion);
 router.put('/questions/:questionid', ctrlQuestions.updateQuestion);
 
+//Add options to question
+
+router.put('/questions/addoption/:questionid', ctrlQuestions.addOption)
 
 module.exports = router;

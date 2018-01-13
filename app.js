@@ -1,7 +1,7 @@
 /*
   NY -Not yet used
 */
-
+require('dotenv').load();
 
 var express = require('express');
 var path = require('path'); //NY
